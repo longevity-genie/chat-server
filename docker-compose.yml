@@ -28,7 +28,7 @@ services:
       - "127.0.0.1:14000:4000" # Map the container port to the host, change the host port if necessary
     env_file:
       - ./.env.proxy # Load local .env file
-      - ./.env.redis # Load local .env file
+      - .env.db # Load local .env file
     depends_on:
       - "llm-cache"
 
@@ -38,7 +38,7 @@ services:
     restart: unless-stopped
     command: /bin/sh -c "redis-server --loglevel notice --requirepass $$REDIS_PASSWORD --port $$REDIS_PORT"
     env_file:
-      - ./.env.redis
+      - .env.db
     ports:
       - "127.0.0.1:16379:6379"
     volumes:
@@ -48,6 +48,8 @@ services:
     container_name: just-chat-mongodb
     image: mongo:latest
     restart: always
+    env_file:
+      - .env.db
     ports:
       - "127.0.0.1:17017:27017"
     volumes:

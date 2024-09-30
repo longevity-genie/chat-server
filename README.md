@@ -8,7 +8,7 @@ Clone the project:
 git clone https://github.com/longevity-genie/chat-server.git
 ```
 ## Preparing the docker environment
-Install the latest Docker and Docker Compose from their respective websites.
+Install the latest Docker and Docker-Compose from their respective websites.
 Optionally, if needed, you may use or refer to the provided script:
 ```commandline
 install_docker_ubuntu.sh
@@ -28,11 +28,13 @@ And vice-versa, to point local endpoints to proxy in the container use localhost
 `OPENAI_API_BASE=http://127.0.0.1:14000/v1`
 
 Create an environment variable file for the proxy and populate `OPENAI_API_KEY`, `GROQ_API_KEY` and other keys with their respective valid values.
-Inspect and correct `proxy.yaml` as needed, currently it is configured for comonnly used OpenAI and GroQ models:
+Inspect and correct `proxy.yaml` as needed, currently it is configured for commonly used OpenAI and GroQ models.
+Specify passwords in 
 ```commandline
 cp .env.proxy.template .env.proxy
 nano .env.proxy
 nano proxy.yaml
+nano .env.db
 ```
 ## Building chat-ui from source as submodule
 `docker-compose` fetches latest pre-built `longevity-genie/chat-ui` 
