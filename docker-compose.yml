@@ -1,0 +1,58 @@
+version: '3.11'
+services:
+  huggingchat-ui:
+    container_name: just-chat-ui
+    image: justdnaseq/genie-chatui:latest
+    build:
+      context: ./chat-ui
+      dockerfile: ./Dockerfile
+    environment:
+      ALLOW_INSECURE_COOKIES: "true"
+      INCLUDE_DB: "False"
+    volumes:
+      - "./.env.local:/app/.env.local"
+      - "./chat-ui/.env:/app/.env"
+    ports:
+      - "0.0.0.0:13000:3000"
+    depends_on:
+      - "chat-mongo"
+      - "litellm-proxy"
+
+  litellm-proxy:
+    container_name: just-litellm-proxy
+    image: ghcr.io/berriai/litellm:main-latest
+    command: '--config proxy_server_config.yaml --detailed_debug'
+    volumes:
+      - "./proxy.yaml:/app/proxy_server_config.yaml"
+    ports:
+      - "127.0.0.1:14000:4000" # Map the container port to the host, change the host port if necessary
+    env_file:
+      - ./.env.proxy # Load local .env file
+      - ./.env.redis # Load local .env file
+    depends_on:
+      - "llm-cache"
+
+  llm-cache:
+    container_name: just-litellm-cache-redis
+    image: redis:7.4-alpine
+    restart: unless-stopped
+    command: /bin/sh -c "redis-server --loglevel notice --requirepass $$REDIS_PASSWORD --port $$REDIS_PORT"
+    env_file:
+      - ./.env.redis
+    ports:
+      - "127.0.0.1:16379:6379"
+    volumes:
+      - "./volumes/redis_data:/bitnami/redis/data"
+
+  chat-mongo:
+    container_name: just-chat-mongodb
+    image: mongo:latest
+    restart: always
+    ports:
+      - "127.0.0.1:17017:27017"
+    volumes:
+      - "./volumes/mongo/db:/data/db"
+
+networks:
+  default:
+    name: chat-server
