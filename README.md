@@ -3,9 +3,9 @@ Example hugging-chat UI + litellm proxy deployment
 By default chat uses Open-AI through a caching proxy
 
 ## Cloning the repo
-Clone the project with dependencies:
+Clone the project:
 ```commandline
-git clone --recurse-submodules https://github.com/longevity-genie/chat-server.git
+git clone https://github.com/longevity-genie/chat-server.git
 ```
 ## Deploying the docker environment
 Install latest docker and docker-compose from respective sites. 
@@ -35,9 +35,10 @@ nano proxy.yaml
 ```
 
 docker-compose fetches latest pre-built longevity-genie/chat-ui 
-Alternatively, build the chat-ui from source using submodule [Repo of the source](https://github.com/longevity-genie/chat-ui): 
+Alternatively, you may want to re-build the chat-ui from source using the submodule [Repo of the source](https://github.com/longevity-genie/chat-ui): 
 ```commandline
-git submodule update --remote
+git submodule update --init --recursive
+git pull --recurse-submodules
 docker-compose up --build
 ```
 
