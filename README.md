@@ -35,7 +35,7 @@ nano proxy.yaml
 ```
 
 docker-compose fetches latest pre-built longevity-genie/chat-ui 
-Alternatively, you may want to re-build the chat-ui from source using the submodule [Repo of the source](https://github.com/longevity-genie/chat-ui): 
+Alternatively, you may want to re-build the chat-ui from source using the submodule [longevity-genie/chat-ui](https://github.com/longevity-genie/chat-ui): 
 ```commandline
 git submodule update --init --recursive
 git pull --recurse-submodules
