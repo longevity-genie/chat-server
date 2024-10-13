@@ -7,20 +7,27 @@ Clone the project:
 ```commandline
 git clone https://github.com/longevity-genie/chat-server.git
 ```
-## Preparing the docker environment
-Install the latest Docker and Docker-Compose from their respective websites.
-Optionally, if needed, you may use or refer to the provided script:
+## Deploying the docker environment
+Activate environment if needed.
+Install latest docker and docker-compose from respective sites. 
+Optionally, if needed, you may use or refer to the provided script
 ```commandline
-install_docker_ubuntu.sh
+./install_docker_ubuntu.sh
 ```
 
-## Populate the environment with your API keys
-Create an environment variable file from template and populate the chat model settings:
+Create environment variable file and populate chat model settings.
+Here we just copy the env.local.template into file .env.local
 ```commandline
 cp .env.local.template .env.local
+```
+
+Here we use nano to edit the file.
+```commandline
 nano .env.local
 ```
-To insert your agentic chain, set the model `baseURL` in the chat environment to your endpoint. Set the baseURL for your agent to the proxy address from `docker-compose.yaml`.
+
+
+To insert your agentic chain, set model baseURL in chat env to your endpoint, set baseurl for your agent to proxy address from docker-compose.
 For containerized endpoints use `chat-server` network
 NB!! For endpoints that are outside containers use docker gateway IP 
 `"baseURL": "http://172.17.0.1:60777/custom/v1"`,
