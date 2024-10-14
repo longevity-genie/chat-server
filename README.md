@@ -27,12 +27,23 @@ nano .env.local
 ```
 
 
-To insert your agentic chain, set model baseURL in chat env to your endpoint, set baseurl for your agent to proxy address from docker-compose.
-For containerized endpoints use `chat-server` network
-NB!! For endpoints that are outside containers use docker gateway IP 
-`"baseURL": "http://172.17.0.1:60777/custom/v1"`,
-And vice-versa, to point local endpoints to proxy in the container use localhost and external 14000 (changeable in `docker-compose.yaml`) port mapping: 
+To insert your custom REST API endpoint (agentic chain)
+
+in file `.env.local`
+set model baseURL in chat env to your endpoint 
+port mapping
 `OPENAI_API_BASE=http://127.0.0.1:14000/v1`
+
+
+in file `docker-compose.yml`
+set baseURL for your agent to proxy address
+
+For containerized endpoints use `chat-server` network
+NB!! 
+For endpoints that are outside containers use docker gateway IP 
+`"baseURL": "http://172.17.0.1:60777/custom/v1"`
+to point local endpoints to proxy in the container use `localhost` or`127.0.0.1` and external `14000`
+
 
 Create an environment variable file for the proxy and populate `OPENAI_API_KEY`, `GROQ_API_KEY` and other keys with their respective valid values.
 Inspect and correct `proxy.yaml` as needed, currently it is configured for commonly used OpenAI and GroQ models.
@@ -43,8 +54,10 @@ nano .env.proxy
 nano proxy.yaml
 nano .env.db
 ```
+
 ## Building chat-ui from source as submodule
-`docker-compose` fetches latest pre-built `longevity-genie/chat-ui` 
+`docker-compose.yml` fetches latest pre-built `longevity-genie/chat-ui` 
+
 Alternatively, you may want to re-build the chat-ui from source using the submodule [longevity-genie/chat-ui](https://github.com/longevity-genie/chat-ui): 
 ```commandline
 git submodule update --init --recursive
