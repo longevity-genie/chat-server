@@ -151,3 +151,63 @@ If you encounter any issues, please check the following:
 3. Check if all required ports are available on your system
 
 For further assistance, please open an issue on the GitHub repository.
+
+## Example
+
+For running the chat UI with the longevity gpt you can follow the next steps:
+1. in longevity_gpts clone repo folder you should run the `openai_endpoint_api.py`
+2. in the same file notice the port it is forwarding to, in this case 8088, found in this part of the code
+```
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("openai_api_endpoint:app", host="0.0.0.0", port=8088, workers=10)
+```
+3. be sure to have also cloned the repo for chat-ui, found separately here ('https://github.com/longevity-genie/chat-ui')
+4. start editing all the env.local, .env according to instructions
+4.1 for `.env.local`
+   ```
+   MONGODB_URL=mongodb://genie:super-secret-password@chat-mongo:27017
+   ALLOW_INSECURE_COOKIES=true
+   OPENAI_API_BASE=http://127.0.0.1:8088/v1
+   ```
+   also MODELS  has to be written according to what you intend to use, example
+   ```
+   MODELS=`[{
+      "name": "gpt-4o-mini",
+      "displayName": "proxified-gpt-4o",
+      "description": "OpenAI gpt-4o-mini model served through cache-proxy",
+      "parameters": {
+        "temperature": 0.0,
+        "max_new_tokens": 10000,
+            "stop": ["[DONE]"]
+      },
+      "endpoints": [
+        {
+          "type": "openai",
+          "baseURL": "http://litellm-proxy:4000/v1",
+          "apiKey": "no_key_needed"
+        }
+      ],
+      "promptExamples": [
+            {
+              "title": "What processes are improved in GHR knockout mice?",
+              "prompt": "What processes are improved in GHR knockout mice?"
+            },
+            {
+              "title": "What genes need to be downregulated in worms to extend their lifespan?",
+              "prompt": "What genes need to be downregulated in worms to extend their lifespan?"
+            },
+      ]
+   },
+   ]`
+   ```
+4.2 for `.env` file found in chat-ui submodule
+   ```
+MONGODB_URL=mongodb://genie:super-secret-password@localhost:27017/
+MONGODB_DB_NAME=chat-ui
+MONGODB_DIRECT_CONNECTION=false
+   ```
+
+5. run ``` docker- compose up```
+
+6. open browser and go to adress ``` 0.0.0.0:13000 ```
