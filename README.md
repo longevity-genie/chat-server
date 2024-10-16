@@ -36,7 +36,7 @@ c. Edit the configuration files:
       nano .env.local
       ```
       This file configures the chat UI settings. You'll need to set:
-      - `OPENAI_API_BASE`: The base URL for your API (default is `http://127.0.0.1:14000/v1`)
+      - `OPENAI_API_BASE`: The base URL for your API (default is `http://127.0.0.1:14000/v1`) or it can be any OpenAI or any other REST API which support OpenAI standard.
       - Other UI-related settings like `PUBLIC_APP_NAME`, `PUBLIC_DEFAULT_SYSTEM_PROMPT`, etc.
 
    2. Edit `.env.proxy`:
@@ -56,14 +56,6 @@ c. Edit the configuration files:
       - Modify the `model_list` section to include the models you want to use
       - Adjust `litellm_settings` if necessary (e.g., drop_params, add_function_to_prompt)
 
-   4. Edit `.env.db`:
-      ```bash
-      nano .env.db
-      ```
-      This file sets up the database credentials. Set these values:
-      - `POSTGRES_USER=your_database_username`
-      - `POSTGRES_PASSWORD=your_database_password`
-      - `POSTGRES_DB=your_database_name`
 
 d. Configure custom REST API endpoint (if needed):
 
@@ -120,6 +112,8 @@ a. Start the OpenAI API endpoint:
    ```bash
    python openai_api_endpoint.py
    ```
+It can be openai rest API directly, it can be any LLM model wrapped by OpenAI compatible REST API or it can be some custom REST API that extends model with additional features (like RAG), for example (https://github.com/longevity-genie/longevity_gpts/blob/main/openai_api_endpoint.py) 
+
 
 b. Run the Docker containers:
    ```bash
