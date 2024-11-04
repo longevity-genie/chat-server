@@ -1,17 +1,12 @@
-version: '3.11'
 services:
   huggingchat-ui:
     container_name: just-chat-ui
-    image: justdnaseq/genie-chatui:latest
-    build:
-      context: ./chat-ui
-      dockerfile: ./Dockerfile
+    image: ghcr.io/longevity-genie/chat-ui/chat-ui:latest
     environment:
       ALLOW_INSECURE_COOKIES: "true"
       INCLUDE_DB: "False"
     volumes:
       - "./.env.local:/app/.env.local"
-      - "./chat-ui/.env:/app/.env"
     ports:
       - "0.0.0.0:13000:3000"
     depends_on:
