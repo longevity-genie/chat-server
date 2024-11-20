@@ -8,7 +8,7 @@ services:
     volumes:
       - "./.env.local:/app/.env.local"
     ports:
-      - "0.0.0.0:13000:3000"
+      - "0.0.0.0:5170:3000"
     depends_on:
       - "chat-mongo"
       - "litellm-proxy"
@@ -46,7 +46,7 @@ services:
     env_file:
       - .env.db
     ports:
-      - "127.0.0.1:17017:27017"
+      - "127.0.0.1:27017:27017"
     volumes:
       - "./volumes/mongo/db:/data/db"
 
