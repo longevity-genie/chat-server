@@ -25,7 +25,16 @@ model_list:
     litellm_params:
       model: openai/gpt-4o
       api_key: os.environ/OPENAI_API_KEY
+
   - model_name: gpt-4o-mini
+    litellm_params:
+      model: openai/gpt-4o-mini
+      api_key: os.environ/OPENAI_API_KEY
+  - model_name: drugs_gpt-4o-mini
+    litellm_params:
+      model: openai/gpt-4o-mini
+      api_key: os.environ/OPENAI_API_KEY
+  - model_name: simple_gpt-4o-mini
     litellm_params:
       model: openai/gpt-4o-mini
       api_key: os.environ/OPENAI_API_KEY
@@ -101,9 +110,9 @@ router_settings:
   redis_port: 6379
 
 litellm_settings:
- # callbacks: ["langfuse"] #Bug
-  failure_callback: [ "langfuse" ]
-  success_callback: [ "langfuse" ]
+  # callbacks: [ "opik_logger" ] #Bug
+  failure_callback: [ "opik", "langfuse" ]
+  success_callback: [ "opik", "langfuse" ]
   langfuse_default_tags: [ "cache_hit", "cache_key", "semantic-similarity", "proxy_base_url" ]
   redact_user_api_key_info: true
   turn_off_message_logging: false
