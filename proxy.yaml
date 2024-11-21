@@ -26,6 +26,11 @@ model_list:
       model: openai/gpt-4o
       api_key: os.environ/OPENAI_API_KEY
 
+  - model_name: mistral-large-latest
+    litellm_params:
+      model: mistral/mistral-large-latest
+      api_key: os.environ/MISTRAL_API_KEY # ensure you have `MISTRAL_API_KEY` in your .env
+
   - model_name: gpt-4o-mini
     litellm_params:
       model: openai/gpt-4o-mini
@@ -106,7 +111,7 @@ router_settings:
   routing_strategy: usage-based-routing # Literal["simple-shuffle", "least-busy", "usage-based-routing","latency-based-routing"], default="simple-shuffle"
   model_group_alias: {"llama3-8b": "groq-llama3-8b-8192"} # all requests with `gpt-4` will be routed to models with `gpt-3.5-turbo`
   redis_host: "llm-cache"
-  redis_password: "genie_redis_password"
+  redis_password: os.environ/REDIS_PASSWORD
   redis_port: 6379
 
 litellm_settings:
