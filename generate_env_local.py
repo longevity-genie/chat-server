@@ -43,6 +43,7 @@ def main():
 
     # Load and validate JSON files from models.d
     model_files = glob.glob(os.path.join(models_dir, '*.json'))
+    model_files.sort()  # Sort the list in place based on file names
     models = []
 
     if not model_files:
